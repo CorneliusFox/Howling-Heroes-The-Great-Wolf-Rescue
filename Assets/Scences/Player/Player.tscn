@@ -117,6 +117,9 @@
 [ext_resource type="FontFile" uid="uid://cuecxy0807xft" path="res://Assets/Fonts/DisposableDroidBB_bld.ttf" id="114_4tv3v"]
 [ext_resource type="Theme" uid="uid://b0wacjljud6at" path="res://Assets/Theme/Alamanac_Book/Wolf_almanac.tres" id="115_i3nx2"]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vs3wm"]
+size = Vector2(116, 115)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_u3xmu"]
 size = Vector2(56, 20)
 
@@ -495,7 +498,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("hurt_area/CollisionShape2D:position")
+tracks/0/path = NodePath("CollisionShape2D:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -507,7 +510,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("hurt_area/CollisionShape2D:rotation")
+tracks/1/path = NodePath("CollisionShape2D:rotation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -894,7 +897,7 @@ tracks/2/use_blend = false
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("hurt_area/CollisionShape2D:rotation")
+tracks/3/path = NodePath("CollisionShape2D:rotation")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -906,7 +909,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("hurt_area/CollisionShape2D:position")
+tracks/4/path = NodePath("CollisionShape2D:position")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -984,7 +987,7 @@ tracks/3/use_blend = true
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("hurt_area/CollisionShape2D:rotation")
+tracks/4/path = NodePath("CollisionShape2D:rotation")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -996,7 +999,7 @@ tracks/4/keys = {
 tracks/5/type = "value"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("hurt_area/CollisionShape2D:position")
+tracks/5/path = NodePath("CollisionShape2D:position")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
@@ -1077,7 +1080,7 @@ tracks/4/use_blend = false
 tracks/5/type = "value"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("hurt_area/CollisionShape2D:position")
+tracks/5/path = NodePath("CollisionShape2D:position")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
@@ -1283,15 +1286,19 @@ bg_color = Color(1, 0, 1, 0.470588)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7hh16"]
 bg_color = Color(0, 1, 1, 1)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_vs3wm"]
-size = Vector2(19, 29)
-
 [node name="Player" type="CharacterBody2D" groups=["camera_target", "player"]]
 process_mode = 3
 collision_layer = 2
 collision_mask = 257
 script = ExtResource("1_jwwc7")
 bullet_scence = ExtResource("2_kni5a")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+light_mask = 26
+visibility_layer = 26
+position = Vector2(4, 17)
+shape = SubResource("RectangleShape2D_vs3wm")
+debug_color = Color(0.729412, 0.47451, 0, 0.419608)
 
 [node name="foot" type="CollisionShape2D" parent="."]
 position = Vector2(3, 45)
@@ -1516,17 +1523,6 @@ vertical_alignment = 1
 
 [node name="Inventory_UI" parent="Inventory/ColorRect" instance=ExtResource("100_dkn5u")]
 layout_mode = 1
-
-[node name="hurt_area" type="Area2D" parent="."]
-collision_layer = 26
-collision_mask = 26
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="hurt_area"]
-light_mask = 26
-visibility_layer = 26
-position = Vector2(4, 17)
-shape = SubResource("RectangleShape2D_vs3wm")
-debug_color = Color(0.729412, 0.47451, 0, 0.419608)
 
 [connection signal="update_ammo" from="." to="Text" method="_on_player_update_ammo"]
 [connection signal="update_coordinate" from="." to="Text" method="_on_player_update_coordinate"]

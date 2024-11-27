@@ -1,15 +1,16 @@
-[gd_scene load_steps=12 format=3 uid="uid://d15sb2gtywq1s"]
+[gd_scene load_steps=13 format=3 uid="uid://d15sb2gtywq1s"]
 
-[ext_resource type="Texture2D" uid="uid://bmuwyila6jh7y" path="res://Assets/Image/Enemy/Taiga/Red Fox/tile000.png" id="2_77ym6"]
-[ext_resource type="Texture2D" uid="uid://bietvp4orjtyq" path="res://Assets/Image/Enemy/Taiga/Red Fox/tile001.png" id="3_rol3g"]
-[ext_resource type="Texture2D" uid="uid://7ngc28ixy2rl" path="res://Assets/Image/Enemy/Taiga/Red Fox/tile003.png" id="4_vpr7o"]
-[ext_resource type="Texture2D" uid="uid://cvojtwlk880rc" path="res://Assets/Image/Enemy/Taiga/Red Fox/tile002.png" id="4_yli5e"]
-[ext_resource type="Texture2D" uid="uid://c7sd2pokhyoop" path="res://Assets/Image/Enemy/Taiga/Red Fox/tile004.png" id="5_b5kyi"]
-[ext_resource type="Texture2D" uid="uid://dfaci8rgp0d26" path="res://Assets/Image/Enemy/Taiga/Red Fox/tile005.png" id="6_ut6it"]
+[ext_resource type="Script" path="res://Assets/Script/Class/Enemy/RedFoxEnemyScript/red_fox.gd" id="1_vgp28"]
+[ext_resource type="Texture2D" uid="uid://b18chghw5ujj6" path="res://Assets/Image/Enemy/Taiga/Red Fox/tile000.png" id="2_77ym6"]
+[ext_resource type="Texture2D" uid="uid://c2cgrw47sxugx" path="res://Assets/Image/Enemy/Taiga/Red Fox/tile001.png" id="3_rol3g"]
+[ext_resource type="Texture2D" uid="uid://cfilro3y81p52" path="res://Assets/Image/Enemy/Taiga/Red Fox/tile003.png" id="4_vpr7o"]
+[ext_resource type="Texture2D" uid="uid://dc30cskug5hch" path="res://Assets/Image/Enemy/Taiga/Red Fox/tile002.png" id="4_yli5e"]
+[ext_resource type="Texture2D" uid="uid://gy7o5evbmftk" path="res://Assets/Image/Enemy/Taiga/Red Fox/tile004.png" id="5_b5kyi"]
+[ext_resource type="Texture2D" uid="uid://gnfyn2m5olc" path="res://Assets/Image/Enemy/Taiga/Red Fox/tile005.png" id="6_ut6it"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_xbp3o"]
 radius = 25.0
-height = 66.0
+height = 53.0
 
 [sub_resource type="Animation" id="Animation_i510e"]
 resource_name = "Iddle"
@@ -54,15 +55,23 @@ _data = {
 size = Vector2(43, 18)
 
 [node name="red_fox" type="CharacterBody2D"]
+script = ExtResource("1_vgp28")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(2, 1.60027)
 shape = SubResource("CapsuleShape2D_xbp3o")
 one_way_collision_margin = 64.0
 
-[node name="AnimatedSprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("6_ut6it")
+[node name="AnimatedSprite" type="Sprite2D" parent="."]
+position = Vector2(0, -25)
+scale = Vector2(2.00615, 2)
+texture = ExtResource("2_77ym6")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="AnimatedSprite2D"]
+[node name="RayCast2D" type="RayCast2D" parent="AnimatedSprite"]
+position = Vector2(0, 10)
+target_position = Vector2(-125, 0)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="AnimatedSprite"]
 libraries = {
 "": SubResource("AnimationLibrary_3gcbj")
 }
@@ -72,3 +81,9 @@ libraries = {
 [node name="CollisionShape2D" type="CollisionShape2D" parent="hurtbox"]
 position = Vector2(-2.5, 10)
 shape = SubResource("RectangleShape2D_1dlvb")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 10.0
+one_shot = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
